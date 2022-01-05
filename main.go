@@ -224,8 +224,8 @@ func main() {
 	})
 
 	r.HandleFunc("/des/", func(w http.ResponseWriter, r *http.Request) {
-		data := Page{
-			Title: "DES",
+		data := DESPage{
+			Page: Page{Title: "DES"},
 		}
 		templates.ExecuteTemplate(w, "des.html", data)
 	})
@@ -264,7 +264,6 @@ func main() {
 		}
 
 		CipherText, _ := hex.DecodeString(r.FormValue("ciphertext"))
-		fmt.Printf("%v", CipherText)
 		plaintext, err := DesDecrypt(CipherText, []byte(data.Key))
 		if err != nil {
 			fmt.Print(err)
@@ -275,6 +274,6 @@ func main() {
 		templates.ExecuteTemplate(w, "des.html", data)
 	})
 
-	http.ListenAndServe(":80", r)
+	http.ListenAndServe(":9000", r)
 
 }
